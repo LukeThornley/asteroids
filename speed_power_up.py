@@ -1,11 +1,21 @@
 import pygame
-from circleshape import CircleShape
-from constants import *
 import random
+from constants import *
+from circleshape import CircleShape
 
-class Shot(CircleShape):
-    def __init__(self, x, y):
-        super().__init__(x, y, SHOT_RADIUS)
+class SpeedPowerUp(CircleShape):
+    def __init__(self, left, top):
+        
+        self.left = left
+        self.top = top
+        self.width = 20
+        self.height = self.width
+        super().__init__(self.left+(self.width/2), self.top+(self.height/2), self.width/2)
+    
+    def rectangle(self):
+        return pygame.Rect(self.left, self.top, self.width, self.height)
+
+    def draw(self, screen):
         colours = [
             "#39FF14",  # Neon Green
             "#7DF9FF",  # Electric Blue
@@ -20,9 +30,8 @@ class Shot(CircleShape):
             ]
         colour_index = int(random.randint(0, 9))
         self.colour = colours[colour_index]
+        
+        pygame.draw.rect(screen, self.colour, self.rectangle())
 
-    def draw(self, screen):
-        pygame.draw.circle(screen, self.colour, self.position, self.radius, 2)
-    
     def update(self, dt):
-        self.position += self.velocity * dt
+        pass
